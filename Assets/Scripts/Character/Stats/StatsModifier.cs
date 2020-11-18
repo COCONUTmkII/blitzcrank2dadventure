@@ -1,4 +1,4 @@
-namespace Character.Stats
+namespace Blitzcrank.Character.Stats
 {
     public enum Stat : int
     {

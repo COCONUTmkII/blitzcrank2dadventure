@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Character.Skill;
-using Character.Stats;
 using UnityEngine;
 
-namespace Character
+#region using Blitzcrank
+using Blitzcrank.Character.Skill;
+using Blitzcrank.Character.Stats;
+#endregion
+
+namespace Blitzcrank.Character
 {
     public abstract class Character : CharacterStats
     {

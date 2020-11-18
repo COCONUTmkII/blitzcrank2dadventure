@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Character.Stats
+namespace Blitzcrank.Character.Stats
 {
     public class BaseStats : MonoBehaviour
     {

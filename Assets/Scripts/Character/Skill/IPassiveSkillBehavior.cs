@@ -1,4 +1,4 @@
-namespace Character.Skill
+namespace Blitzcrank.Character.Skill
 {
     public interface IPassiveSkillBehavior
     {

@@ -1,7 +1,10 @@
 using System.Collections.Generic;
-using Character.Stats;
 
-namespace Character.Skill
+#region using Blitzcrank
+using Blitzcrank.Character.Stats;
+#endregion
+
+namespace Blitzcrank.Character.Skill
 {
     public interface ISecondSkillBehavior
     {
