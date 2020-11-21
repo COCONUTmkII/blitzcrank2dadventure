@@ -1,6 +1,4 @@
 ﻿using Blitzcrank.Manager;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Blitzcrank.Character
@@ -8,20 +6,20 @@ namespace Blitzcrank.Character
     public class Player : Character
     {
         [SerializeField] private TouchInput touchInput;
-        Vector2 inputVector;
-        private Rigidbody2D rb;
-        private int jumpCount = 0;
-        private float thrust = 10.0f;
+        private Vector2 _inputVector;
+        private Rigidbody2D _rb;
+        private int _jumpCount = 0;
+        private float _thrust = 10.0f;
         public float maxSpeed = 10f;
 
         void Start()
         {
-            rb = GetComponent<Rigidbody2D>();
+            _rb = GetComponent<Rigidbody2D>();
         }
 
         void OnCollisionEnter2D(Collision2D other)
         {
-            jumpCount = 0;
+            _jumpCount = 0;
         }
         void Update()
         {
@@ -41,23 +39,25 @@ namespace Blitzcrank.Character
         }
         void InputVector(Vector2 input)
         {
-            inputVector = input;
+            _inputVector = input;
         }
         void Move()
         {
 
-            rb.velocity = new Vector2(inputVector.x * maxSpeed, rb.velocity.y);
-            if (inputVector.y > 0.6)
+            _rb.velocity = new Vector2(_inputVector.x * maxSpeed, _rb.velocity.y);
+            if (_inputVector.y > 0.6)
             {
-                Jump(inputVector);
+                Jump(_inputVector);
             }
         }
+        
+        //TODO needs to be fixed with double jump here!
         void Jump(Vector2 inputVector)
         {
-            if (jumpCount < 1)
+            if (_jumpCount < 1)
             {
-                rb.AddForce(transform.up * thrust, ForceMode2D.Impulse);
-                jumpCount++;
+                _rb.AddForce(transform.up * _thrust, ForceMode2D.Impulse);
+                _jumpCount++;
                 inputVector.y = 0;
             }
         }

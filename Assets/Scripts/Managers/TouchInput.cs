@@ -11,21 +11,21 @@ namespace Blitzcrank.Manager
     {
         public delegate void JoystickDelegate(Vector2 vector);
         public event JoystickDelegate JoystickEvent;
-        private GameObject _leftСontroller;
+        private GameObject _leftController;
         private Image _bgJoystickImg;
         private Image _joystickImg;
         private Vector2 _inputVector;
 
         private void Start()
         {
-            _leftСontroller = GameObject.Find("LeftСontroller");
-            _bgJoystickImg = _leftСontroller.GetComponent<Image>();
-            _joystickImg = _leftСontroller.transform.GetChild(0).GetComponent<Image>();
+            _leftController = GameObject.Find("LeftController");
+            _bgJoystickImg = _leftController.GetComponent<Image>();
+            _joystickImg = _leftController.transform.GetChild(0).GetComponent<Image>();
         }
         public void OnDrag(PointerEventData eventData)
         {
             //Left rectangle zone Joystick UI
-            if (eventData.pointerEnter == _leftСontroller || eventData.pointerEnter == _joystickImg.gameObject)
+            if (eventData.pointerEnter == _leftController || eventData.pointerEnter == _joystickImg.gameObject)
             {
                 JoystickEvent(OnJoystickDrag(eventData));
             }
