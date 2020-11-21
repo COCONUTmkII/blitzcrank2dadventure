@@ -9,39 +9,44 @@ namespace Blitzcrank.Manager
 {
     public class TouchInput : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler, IPointerClickHandler
     {
-        public delegate void JoysticDelegate(Vector2 vector);
-        public event JoysticDelegate JoysticEvent;
-        private GameObject leftСontroller;
-        private Image bgJoysticImg;
-        private Image joysticImg;
-        private Vector2 inputVector;
+        public delegate void JoystickDelegate(Vector2 vector);
+        public event JoystickDelegate JoystickEvent;
+        private GameObject _leftСontroller;
+        private Image _bgJoystickImg;
+        private Image _joystickImg;
+        private Vector2 _inputVector;
 
         private void Start()
         {
-            leftСontroller = GameObject.Find("LeftСontroller");
-            bgJoysticImg = leftСontroller.transform.GetChild(0).GetComponent<Image>();
-            joysticImg = bgJoysticImg.transform.GetChild(0).GetComponent<Image>();
+            _leftСontroller = GameObject.Find("LeftСontroller");
+            _bgJoystickImg = _leftСontroller.GetComponent<Image>();
+            _joystickImg = _leftСontroller.transform.GetChild(0).GetComponent<Image>();
         }
         public void OnDrag(PointerEventData eventData)
         {
-            Vector2 pos;
-            if ((eventData.position.x < 500 && eventData.position.x > 0) && (eventData.position.y < 500 && eventData.position.y > 0))
+            //Left rectangle zone Joystick UI
+            if (eventData.pointerEnter == _leftСontroller || eventData.pointerEnter == _joystickImg.gameObject)
             {
-                
-                if (RectTransformUtility.ScreenPointToLocalPointInRectangle(bgJoysticImg.rectTransform,
-                                                                            eventData.position,
-                                                                            eventData.pressEventCamera,
-                                                                            out pos))
-                {
-                    pos.x /= bgJoysticImg.rectTransform.sizeDelta.x;
-                    pos.y /= bgJoysticImg.rectTransform.sizeDelta.y;
-                    inputVector = new Vector2(pos.x * 2, pos.y * 2);
-                    inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
-                    joysticImg.rectTransform.anchoredPosition = new Vector2(inputVector.x * (bgJoysticImg.rectTransform.sizeDelta.x / 3),
-                                                                            inputVector.y * (bgJoysticImg.rectTransform.sizeDelta.y / 3));
-                }
-                JoysticEvent(inputVector);
+                JoystickEvent(OnJoystickDrag(eventData));
             }
+        }
+        
+        private Vector2 OnJoystickDrag(PointerEventData eventData)
+        {
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(_bgJoystickImg.rectTransform,
+                                                                           eventData.position,
+                                                                           eventData.pressEventCamera,
+                                                                           out Vector2 pos))
+            {
+                Vector2 sizeDelta = _bgJoystickImg.rectTransform.sizeDelta;
+                pos.x /= sizeDelta.x;
+                pos.y /= sizeDelta.y;
+                _inputVector = new Vector2(pos.x * 2, pos.y * 2);
+                _inputVector = (_inputVector.magnitude > 1.0f) ? _inputVector.normalized : _inputVector;
+                _joystickImg.rectTransform.anchoredPosition = new Vector2(_inputVector.x * (sizeDelta.x / 3),
+                                                                        _inputVector.y * (sizeDelta.y / 3));
+            }
+            return _inputVector;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -53,13 +58,14 @@ namespace Blitzcrank.Manager
         public void OnPointerDown(PointerEventData eventData)
         {
             OnDrag(eventData);
+            Debug.Log(eventData.pointerEnter);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            inputVector = Vector2.zero;
-            joysticImg.rectTransform.anchoredPosition = Vector2.zero;
-            JoysticEvent(inputVector);
+            _inputVector = Vector2.zero;
+            _joystickImg.rectTransform.anchoredPosition = Vector2.zero;
+            JoystickEvent(_inputVector);
         }
     }
 }

@@ -33,11 +33,11 @@ namespace Blitzcrank.Character
         }
         void OnEnable()
         {
-            touchInput.JoysticEvent += InputVector ;
+            touchInput.JoystickEvent += InputVector ;
         }
         void OnDisable()
         {
-            touchInput.JoysticEvent -= InputVector;
+            touchInput.JoystickEvent -= InputVector;
         }
         void InputVector(Vector2 input)
         {
