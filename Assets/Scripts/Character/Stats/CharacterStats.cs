@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Character.Stats
+namespace Blitzcrank.Character.Stats
 {
     public class CharacterStats : BaseStats
     {
