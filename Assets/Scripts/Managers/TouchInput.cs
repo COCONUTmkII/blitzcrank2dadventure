@@ -19,8 +19,8 @@ namespace Blitzcrank.Manager
         private void Start()
         {
             _leftController = GameObject.Find("LeftController");
-            _bgJoystickImg = _leftController.GetComponent<Image>();
-            _joystickImg = _leftController.transform.GetChild(0).GetComponent<Image>();
+            _bgJoystickImg = _leftController.transform.GetChild(0).GetComponent<Image>();
+            _joystickImg = _bgJoystickImg.transform.GetChild(0).GetComponent<Image>();
         }
         public void OnDrag(PointerEventData eventData)
         {
